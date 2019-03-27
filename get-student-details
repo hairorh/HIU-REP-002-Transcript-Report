@@ -1,0 +1,22 @@
+SELECT person.personID, person.fname, person.lname, address.address1, address.city, address.state, address.zip		
+
+		FROM
+			(# Get Student name
+			SELECT person.personID, person.fname, person.lname
+				FROM person
+				WHERE 1
+				) AS person
+
+
+		LEFT JOIN
+			(# Get Student address
+			SELECT address.personID, address.address1, address.city, address.state, address.zip
+				FROM address
+				WHERE 1
+				) AS address
+		ON person.personID = address.personID
+
+
+		WHERE
+			# Set Student
+			person.personID = {{47646501__Student ID}}
