@@ -1,0 +1,13 @@
+# Get Credits for GPA calculation
+SELECT
+	SUM(attCred)
+		as
+			gpaCredits
+	FROM
+		stu_acad_cred
+	WHERE
+		stuID = 20113410
+		AND
+			grade
+			NOT	IN
+				('W','FR', 'CR')
