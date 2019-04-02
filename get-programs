@@ -9,34 +9,15 @@ SELECT
 FROM
 	(
 	# Build Table
-	SELECT person.personID, person.fname, person.lname, address.address1, address.city, address.state, address.zip, stu_program.currStatus, stu_program.startDate, stu_program.endDate, acad_program.acadProgTitle, stu_acad_cred.courseCode, stu_acad_cred.termCode, stu_acad_cred.shortTitle, stu_acad_cred.attCred, stu_acad_cred.compCred, stu_acad_cred.gradePoints, stu_acad_cred.grade
+	SELECT stu_program.currStatus, stu_program.startDate, stu_program.endDate, acad_program.acadProgTitle
 		
 
 		FROM
-			(# Get Student name
-			SELECT person.personID, person.fname, person.lname
-				FROM person
-				WHERE 1
-				) AS person
-
-
-		LEFT JOIN
-			(# Get Student address
-			SELECT address.personID, address.address1, address.city, address.state, address.zip
-				FROM address
-				WHERE 1
-				) AS address
-		ON person.personID = address.personID
-
-
-		LEFT JOIN
 			(# Get Student program
 			SELECT stu_program.stuID, stu_program.acadProgCode, stu_program.currStatus, stu_program.startDate, stu_program.endDate
 				FROM stu_program
 				WHERE 1
 				) AS stu_program
-		ON person.personID = stu_program.stuID
-
 
 		LEFT JOIN
 			(# Get Program name
@@ -46,21 +27,11 @@ FROM
 				) AS acad_program
 		ON stu_program.acadProgCode = acad_program.acadProgCode
 
-
-		LEFT JOIN
-			(# Get Courses
-			SELECT stu_acad_cred.stuID, stu_acad_cred.courseCode, stu_acad_cred.termCode, stu_acad_cred.shortTitle, stu_acad_cred.attCred, stu_acad_cred.compCred, stu_acad_cred.gradePoints, stu_acad_cred.grade
-				FROM stu_acad_cred
-				WHERE 1
-				) AS stu_acad_cred
-		ON person.personID = stu_acad_cred.stuID
-
-
 		WHERE
 			# Set Student
-			person.personID = {{47646501__Student ID}}
+			stu_program.stuID = {{47646501__Student ID}}
 
-		GROUP BY acad_program.acadProgTitle
+		ORDER BY acad_program.acadProgTitle
 	)
 
 z
